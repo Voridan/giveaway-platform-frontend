@@ -132,7 +132,7 @@ const Giveaway: FC<GiveawayProps> = ({ giveaway }) => {
                   >
                     {giveaway.partners.map((p) => (
                       <ListItem
-                        key={p.id + Date.now()}
+                        key={p.id}
                         alignItems='center'
                         sx={{ padding: '8px 8px 0 8px' }}
                       >

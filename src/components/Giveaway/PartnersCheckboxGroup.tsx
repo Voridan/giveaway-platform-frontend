@@ -5,11 +5,12 @@ import {
   FormGroup,
 } from '@mui/material';
 import { Partner } from '../../models/Partner';
+import { EntityId } from '../../types';
 
 interface PartnerCheckboxGroupProps {
   partners: Partner[];
-  selectedIds: Set<number>;
-  setSelectedIds: React.Dispatch<React.SetStateAction<Set<number>>>;
+  selectedIds: Set<EntityId>;
+  setSelectedIds: React.Dispatch<React.SetStateAction<Set<EntityId>>>;
 }
 
 const PartnerCheckboxGroup: React.FC<PartnerCheckboxGroupProps> = ({
@@ -17,11 +18,11 @@ const PartnerCheckboxGroup: React.FC<PartnerCheckboxGroupProps> = ({
   selectedIds,
   setSelectedIds,
 }) => {
-  const handleCheckboxChange = (partnerId: number) => {
+  const handleCheckboxChange = (partnerId: EntityId) => {
     setSelectedIds((prevSelectedIds) => {
       const newSelectedIds = prevSelectedIds
         ? new Set(prevSelectedIds)
-        : new Set<number>();
+        : new Set<EntityId>();
       if (newSelectedIds.has(partnerId)) {
         newSelectedIds.delete(partnerId);
       } else {

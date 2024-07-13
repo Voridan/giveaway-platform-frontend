@@ -1,5 +1,7 @@
+import { EntityId } from '../types';
+
 export interface User {
-  id: number;
+  id: EntityId;
   email: string;
   userName: string;
   isAdmin: boolean;

@@ -1,7 +1,8 @@
+import { EntityId } from '../types';
 import { Partner } from './Partner';
 
 export interface Giveaway {
-  id: number;
+  id: EntityId;
   title: string;
   description?: string;
   postUrl?: string;

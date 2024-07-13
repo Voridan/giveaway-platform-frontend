@@ -1,5 +1,7 @@
+import { EntityId } from '../types';
+
 export interface GiveawayListItem {
-  id: number;
+  id: EntityId;
   title: string;
   onModeration: boolean;
   ended: boolean;

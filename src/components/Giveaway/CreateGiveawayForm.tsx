@@ -15,13 +15,14 @@ import Popup from '../general/Popup';
 import usePopup from '../../hooks/usePopup';
 import { AxiosError } from 'axios';
 import { Partner } from '../../models/Partner';
+import { EntityId } from '../../types';
 
 interface CreateGiveawayDto {
   title: string;
   description?: string;
   participants?: string;
   postUrl?: string;
-  partnerIds?: string;
+  partnersIds?: string;
 }
 
 const CreateGiveawayForm = () => {
@@ -29,7 +30,7 @@ const CreateGiveawayForm = () => {
   const [description, setDescription] = useState('');
   const [partners, setPartners] = useState<Partner[] | null>(null);
   const [participantsOrUrl, setParticipantsOrUrl] = useState('');
-  const [selectedPartnerIds, setSelectedPartnerIds] = useState<Set<number>>(
+  const [selectedPartnerIds, setSelectedPartnerIds] = useState<Set<EntityId>>(
     new Set()
   );
   const navigate = useNavigate();
@@ -64,7 +65,7 @@ const CreateGiveawayForm = () => {
       }
     }
     if (selectedPartnerIds.size > 0) {
-      createGiveawayBody.partnerIds = [...selectedPartnerIds.values()].join(
+      createGiveawayBody.partnersIds = [...selectedPartnerIds.values()].join(
         ' '
       );
     }

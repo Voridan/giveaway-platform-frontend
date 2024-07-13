@@ -8,11 +8,6 @@ const useReorder = <T>(key: keyof T) => {
         return items;
       }
 
-      // const toReorder = [...items];
-      // const firstItem = toReorder[0];
-      // toReorder[0] = toReorder[searchItemIdx];
-      // toReorder[searchItemIdx] = firstItem;
-
       return [
         items[searchItemIdx],
         ...items.slice(0, searchItemIdx),

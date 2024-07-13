@@ -35,7 +35,6 @@ export default function GiveawaysPage() {
       const response = await axiosPrivate.get<GiveawayListItem[]>(endPoint, {
         signal: controller.signal,
       });
-      console.log(response);
 
       if (response.data.length > 0) {
         const totalCount = response.headers['giveaways-total-count'];

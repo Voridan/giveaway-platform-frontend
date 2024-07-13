@@ -1,4 +1,6 @@
+import { EntityId } from '../types';
+
 export interface Partner {
-  id: number;
+  id: EntityId;
   email: string;
 }
