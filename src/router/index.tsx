@@ -1,7 +1,6 @@
 import AuthPage from '../pages/AuthPage';
 import { Navigate, createBrowserRouter } from 'react-router-dom';
 import StatsPage from '../pages/StatsPage';
-import ExplorePage from '../pages/Explore';
 import { Layout } from '../components/Layout';
 import ProfilePage from '../pages/ProfilePage';
 import Unauthorized from '../components/Unauthorized';
@@ -16,6 +15,7 @@ import EditGiveawayPage from '../pages/EditGiveawayPage';
 import GiveawayResultsPage from '../pages/GiveawayResultsPage';
 import ForgotPasswordPage from '../pages/ForgotPasswordPage';
 import { AdminRoutes, Routes } from './routes';
+import PartneredGiveaways from '../pages/PartneredGiveawaysPage';
 
 export const router = createBrowserRouter([
   {
@@ -53,16 +53,21 @@ export const router = createBrowserRouter([
                 // },
                 // ],
               },
-              // {
-              //   // element: <RequiresAuth isAdmin={false} />,
-              //   path: Routes.EXPLORE,
-              //   // children: [
-              //   // {
-              //   // path: '',
-              //   element: <ExplorePage />,
-              //   // },
-              //   // ],
-              // },
+              {
+                path: Routes.PARTNERED,
+                element: <RequiresAuth isAdmin={false} />,
+                children: [
+                  {
+                    element: <PartneredGiveaways />,
+                    path: '',
+                    index: true,
+                  },
+                  {
+                    path: ':id',
+                    element: <GiveawayPage />,
+                  },
+                ],
+              },
               {
                 element: <RequiresAuth isAdmin={false} />,
                 path: Routes.GIVEAWAYS,

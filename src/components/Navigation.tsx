@@ -47,12 +47,12 @@ const Navigation = () => {
           </Link>
         </ListItem>
         <ListItem disablePadding>
-          <Link to={Routes.EXPLORE} style={{ width: '100%' }}>
+          <Link to={Routes.PARTNERED} style={{ width: '100%' }}>
             <ListItemButton>
               <ListItemIcon>
                 <PageviewRounded color={'primary'} />
               </ListItemIcon>
-              <ListItemText primary={'Explore'} />
+              <ListItemText primary={'Partnered Giveaways'} />
             </ListItemButton>
           </Link>
         </ListItem>

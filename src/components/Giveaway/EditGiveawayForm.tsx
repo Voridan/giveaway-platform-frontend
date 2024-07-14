@@ -8,7 +8,7 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import testImg from '../assets/test.jpg';
+import testImg from '../../assets/test.jpg';
 import { ExpandMore } from '@mui/icons-material';
 import ExpandMoreComponent from '../../components/general/ExpandMore';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -148,7 +148,9 @@ const EditGiveawayForm = () => {
           body.description = formData.description;
         if (didPartnersChanged())
           body.partnersIds = [...selectedPartnerIds.values()].join(' ');
-        if (formData.postUrl) body.postUrl = formData.postUrl;
+
+        if (formData.postUrl && formData.postUrl !== giveaway.postUrl)
+          body.postUrl = formData.postUrl;
         if (formData.participants) body.participants = formData.participants;
 
         await axiosPrivate.patch(`/giveaways/${giveaway.id}`, body);

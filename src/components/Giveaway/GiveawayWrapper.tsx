@@ -1,6 +1,6 @@
 import useAuth from '../../hooks/useAuth';
 import Giveaway from './Giveaway';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import { useEffect, useState } from 'react';
 import { Giveaway as GiveawayModel } from '../../models/Giveaway';
@@ -10,6 +10,7 @@ import Loader from '../general/Loader/Loader';
 import { Container } from '@mui/material';
 
 const GiveawayWrapper = () => {
+  const location = useLocation();
   const { id } = useParams();
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
@@ -39,7 +40,9 @@ const GiveawayWrapper = () => {
     <Container maxWidth={false} sx={{ margin: '10px 0' }}>
       {isLoading && <Loader />}
       <Giveaway giveaway={giveaway} />
-      {auth?.isAdmin ? (
+      {location.state.partnered ? (
+        <></>
+      ) : auth?.isAdmin ? (
         <GiveawayAdminActions giveaway={giveaway} />
       ) : (
         <GiveawayActions

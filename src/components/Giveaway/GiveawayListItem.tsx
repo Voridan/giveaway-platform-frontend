@@ -7,9 +7,10 @@ import GiveawayStatus from './GiveawayStatus';
 
 interface GiveawayProps {
   giveaway: GiveawayListItemModel;
+  partnered?: boolean;
 }
 
-const GiveawayListItem: FC<GiveawayProps> = ({ giveaway }) => {
+const GiveawayListItem: FC<GiveawayProps> = ({ giveaway, partnered }) => {
   return (
     <Box position={'relative'}>
       <Box sx={{ position: 'absolute', top: '10px', right: '10px' }}>
@@ -21,6 +22,7 @@ const GiveawayListItem: FC<GiveawayProps> = ({ giveaway }) => {
       </Box>
       <Link
         to={`${giveaway.id}`}
+        state={{ partnered }}
         style={{
           color: 'inherit',
           textDecoration: 'none',

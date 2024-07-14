@@ -4,7 +4,7 @@ export enum Routes {
   AUTH = '/auth',
   STATS = 'statistic',
   GIVEAWAYS = 'giveaways',
-  EXPLORE = 'explore',
+  PARTNERED = 'partnered',
   PROFILE = 'profile',
   UNAUTHORIZED = '/unauthorized',
   ADD_GIVEAWAY = 'add-giveaway',

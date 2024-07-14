@@ -6,9 +6,13 @@ import GiveawayListItem from './GiveawayListItem';
 
 interface GiveawayProps {
   giveaway: GiveawayListItemModel;
+  partnered?: boolean;
 }
 
-const GiveawayListItemWrapper: FC<GiveawayProps> = ({ giveaway }) => {
+const GiveawayListItemWrapper: FC<GiveawayProps> = ({
+  giveaway,
+  partnered,
+}) => {
   return (
     <Box
       sx={{
@@ -16,7 +20,7 @@ const GiveawayListItemWrapper: FC<GiveawayProps> = ({ giveaway }) => {
         opacity: giveaway.onModeration ? 0.4 : 1,
       }}
     >
-      <GiveawayListItem giveaway={giveaway} />
+      <GiveawayListItem giveaway={giveaway} partnered={partnered} />
     </Box>
   );
 };

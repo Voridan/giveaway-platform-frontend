@@ -19,7 +19,7 @@ import { Auth } from '../models';
 import { Routes } from '../router/routes';
 import { useEffect } from 'react';
 
-const LOGIN_URL = 'auth/local/login';
+const LOGIN_URL = '/auth/local/login';
 
 const LoginForm = () => {
   const { setAuth, persist, setPersist } = useAuth();

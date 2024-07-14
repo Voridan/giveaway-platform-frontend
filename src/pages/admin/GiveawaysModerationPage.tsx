@@ -40,7 +40,6 @@ const GiveawaysModerationPage = () => {
     loading,
     node: bottomRef,
     callback() {
-      console.log('cb');
       setPage(page + 1);
     },
   });

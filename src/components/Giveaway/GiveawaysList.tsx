@@ -8,9 +8,10 @@ import GiveawayListItemWrapper from './GiveawayListItemWrapper';
 
 interface GiveawaysListProps {
   giveaways: GiveawayListItemModel[];
+  partnered?: boolean;
 }
 
-const GiveawaysList: FC<GiveawaysListProps> = ({ giveaways }) => {
+const GiveawaysList: FC<GiveawaysListProps> = ({ giveaways, partnered }) => {
   const { auth } = useAuth();
 
   return (
@@ -21,7 +22,10 @@ const GiveawaysList: FC<GiveawaysListProps> = ({ giveaways }) => {
             {auth?.isAdmin ? (
               <GiveawayListItem giveaway={giveaway} />
             ) : (
-              <GiveawayListItemWrapper giveaway={giveaway} />
+              <GiveawayListItemWrapper
+                giveaway={giveaway}
+                partnered={partnered}
+              />
             )}
           </Grid>
         ))}
