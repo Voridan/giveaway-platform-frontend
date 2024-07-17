@@ -3,6 +3,10 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import {
+  RESET_PASSWORD_CHANNEL,
+  ResetPasswordEvent,
+} from '../types/reset-password';
 
 interface ResetPasswordModel {
   oldPassword: string;
@@ -39,6 +43,12 @@ const ForgotPasswordPage = () => {
     try {
       setLoading(true);
       await axiosPrivate.post('/auth/reset-password', body);
+      const channel = new BroadcastChannel(RESET_PASSWORD_CHANNEL);
+      const message: ResetPasswordEvent = {
+        didPasswordChanged: true,
+      };
+      channel.postMessage(message);
+      channel.close();
       alert('done');
       window.close();
     } catch (error) {

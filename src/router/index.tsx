@@ -99,11 +99,11 @@ export const router = createBrowserRouter([
           },
         ],
       },
-      {
-        path: Routes.RESET_PASSWORD,
-        element: <ForgotPasswordPage />,
-      },
     ],
+  },
+  {
+    path: Routes.RESET_PASSWORD,
+    element: <ForgotPasswordPage />,
   },
   {
     path: AdminRoutes.ADMIN,
