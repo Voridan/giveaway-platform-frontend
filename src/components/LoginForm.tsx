@@ -59,9 +59,7 @@ const LoginForm = () => {
         if (!err?.response) {
           popupState.popupHandlers.setPopupContent('No Server Response');
         } else if (err.response?.status === 400) {
-          popupState.popupHandlers.setPopupContent(
-            'Missing Username or Password'
-          );
+          popupState.popupHandlers.setPopupContent(err.response.data.message);
         } else if (err.response?.status === 401) {
           popupState.popupHandlers.setPopupContent('Unauthorized');
         } else {

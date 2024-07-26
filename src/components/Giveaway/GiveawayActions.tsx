@@ -31,7 +31,7 @@ const GiveawayActions: FC<GiveawayActionsProps> = ({
   const handleEnd = async () => {
     try {
       setIsLoading(true);
-      const response = await axiosPrivate.post(
+      const response = await axiosPrivate.patch(
         `/giveaways/${giveaway?.id}/end`
       );
       setGiveaway(response.data);
@@ -57,7 +57,7 @@ const GiveawayActions: FC<GiveawayActionsProps> = ({
             </Button>
           </Link>
           <Button
-            disabled={giveaway.ended}
+            // disabled={giveaway.ended}
             variant='outlined'
             color='warning'
             onClick={handleEnd}
