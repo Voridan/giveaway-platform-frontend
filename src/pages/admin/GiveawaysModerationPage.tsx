@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useFetching from '../../hooks/useFetching';
 import { GiveawayListItem } from '../../models/GiveawayListItem';
 import useObserver from '../../hooks/useObserver';
@@ -7,20 +7,21 @@ import GiveawaysList from '../../components/Giveaway/GiveawaysList';
 import { Container } from '@mui/material';
 import InputOnlySearch from '../../components/general/InputOnlySearch/InputOnlySearch';
 import { Giveaway } from '../../models/Giveaway';
+import Loader from '../../components/general/Loader/Loader';
 
 const GiveawaysModerationPage = () => {
-  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(false);
   const [page, setPage] = useState(1);
   const [giveaways, setGiveaways] = useState<GiveawayListItem[]>([]);
   const bottomRef = useRef<HTMLDivElement | null>(null);
   const axiosPrivate = useAxiosPrivate();
   const lastItemRef = useRef<GiveawayListItem | null>(null);
   const limit = 10;
+  console.log(hasMore);
 
   const [fetchFn, loading, error] = useFetching(
     async (limit: number, lastItemId: number, controller: AbortController) => {
       const endPoint = `/giveaways`;
-
       const response = await axiosPrivate.get<GiveawayListItem[]>(endPoint, {
         signal: controller.signal,
         params: {
@@ -31,22 +32,26 @@ const GiveawaysModerationPage = () => {
 
       setGiveaways((prev) => [...prev, ...response.data]);
       setHasMore(response.data.length > 0);
-      lastItemRef.current = response.data[response.data.length - 1];
+      lastItemRef.current =
+        response.data[response.data.length - 1] || lastItemRef.current;
     }
   );
+
+  const handleObservation = useCallback(() => {
+    setPage((page) => page + 1);
+  }, []);
 
   useObserver({
     canLoad: hasMore,
     loading,
     node: bottomRef,
-    callback() {
-      setPage(page + 1);
-    },
+    callback: handleObservation,
   });
 
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
+
     isMounted && fetchFn(limit, lastItemRef.current?.id || -1, controller);
 
     return () => {
@@ -57,6 +62,7 @@ const GiveawaysModerationPage = () => {
 
   const handleSearch = (giveawaysResponse: Giveaway[] | null) => {
     if (giveawaysResponse === null) {
+      lastItemRef.current = null;
       setPage(1);
     } else {
       setGiveaways([
@@ -78,6 +84,7 @@ const GiveawaysModerationPage = () => {
         url='/giveaways/search'
         label='search giveaway'
       />
+      {loading && <Loader />}
       <GiveawaysList giveaways={giveaways} />
       <div
         ref={bottomRef}

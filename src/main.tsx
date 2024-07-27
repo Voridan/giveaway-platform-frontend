@@ -7,8 +7,6 @@ import { AuthProvider } from './context/AuthProvider.tsx';
 import { ThemeProvider } from '@emotion/react';
 import theme from './theme.ts';
 
-//TODO complete requireauth component, sign up, test authenticaton and authorization
-
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthProvider>

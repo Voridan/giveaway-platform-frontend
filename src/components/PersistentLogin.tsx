@@ -19,7 +19,6 @@ const PersistentLogin = () => {
         isMounted && setIsLoading(false);
       }
     };
-
     !auth?.accessToken && persist ? verifyRefreshToken() : setIsLoading(false);
 
     return () => {

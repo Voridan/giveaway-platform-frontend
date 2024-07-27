@@ -23,7 +23,7 @@ const useObserver = ({
       }
     });
     if (node.current) observer.current.observe(node.current);
-  }, [loading, canLoad]);
+  }, [loading, canLoad, callback, node]);
 
   return '';
 };

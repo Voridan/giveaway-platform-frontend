@@ -14,4 +14,5 @@ export enum Routes {
 export enum AdminRoutes {
   ADMIN = 'admin',
   GIVEAWAYS = 'giveaways',
+  PROFILE = 'profile',
 }

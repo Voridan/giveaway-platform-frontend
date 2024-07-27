@@ -1,5 +1,6 @@
-import { ListAltRounded, Logout } from '@mui/icons-material';
+import { ListAltRounded } from '@mui/icons-material';
 import {
+  Avatar,
   Box,
   List,
   ListItem,
@@ -9,14 +10,24 @@ import {
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { AdminRoutes } from '../router/routes';
-import useLogout from '../hooks/useLogout';
+import useAuth from '../hooks/useAuth';
 
 const AdminNavigation = () => {
-  const logout = useLogout();
+  const { auth } = useAuth();
 
   return (
     <Box sx={{ width: 250 }} role='presentation'>
       <List>
+        <ListItem disablePadding>
+          <Link to={AdminRoutes.PROFILE} style={{ width: '100%' }}>
+            <ListItemButton>
+              <ListItemIcon>
+                <Avatar />
+              </ListItemIcon>
+              <ListItemText primary={auth?.userName} />
+            </ListItemButton>
+          </Link>
+        </ListItem>
         <ListItem disablePadding>
           <Link to={AdminRoutes.GIVEAWAYS} style={{ width: '100%' }}>
             <ListItemButton>
@@ -26,14 +37,6 @@ const AdminNavigation = () => {
               <ListItemText primary={'Giveaways'} />
             </ListItemButton>
           </Link>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton onClick={logout}>
-            <ListItemIcon>
-              <Logout color={'primary'} />
-            </ListItemIcon>
-            <ListItemText primary={'Logout'} />
-          </ListItemButton>
         </ListItem>
       </List>
     </Box>
