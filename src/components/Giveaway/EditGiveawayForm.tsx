@@ -124,17 +124,6 @@ const EditGiveawayForm = () => {
     return { isValid, warningMsg };
   };
 
-  const didPartnersChanged = () => {
-    if (selectedPartnerIds.size !== giveaway.partners.length) return true;
-    for (const partner of giveaway.partners) {
-      if (!selectedPartnerIds.has(partner.id)) {
-        return true;
-      }
-    }
-
-    return false;
-  };
-
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const { isValid, warningMsg } = validateInput();
@@ -142,17 +131,20 @@ const EditGiveawayForm = () => {
       try {
         setIsLoading(true);
         const body: EditGiveaway = {};
-
         if (formData.title !== giveaway.title) body.title = formData.title;
+
         if (formData.description !== giveaway.description)
           body.description = formData.description;
-        if (didPartnersChanged())
-          body.partnersIds = [...selectedPartnerIds.values()].join(' ');
 
         if (formData.postUrl && formData.postUrl !== giveaway.postUrl)
           body.postUrl = formData.postUrl;
-        if (formData.participants) body.participants = formData.participants;
 
+        if (formData.participants) body.participants = formData.participants;
+        console.log(selectedPartnerIds);
+        console.log([...selectedPartnerIds.values()]);
+        console.log([...selectedPartnerIds.values()].join(' '));
+
+        body.partnersIds = [...selectedPartnerIds.values()].join(' ');
         await axiosPrivate.patch(`/giveaways/${giveaway.id}`, body);
 
         popupHandlers.setIsError(false);
@@ -182,6 +174,7 @@ const EditGiveawayForm = () => {
       popupHandlers.setPopupContent(warningMsg);
     }
   };
+  console.log(giveaway);
 
   return (
     <Container maxWidth={false} sx={{ margin: '10px 0' }}>
@@ -317,7 +310,7 @@ const EditGiveawayForm = () => {
               <Grid container mt={2} gap={2}>
                 <TextField
                   autoComplete='off'
-                  disabled={giveaway.postUrl !== null}
+                  disabled={!!giveaway.postUrl}
                   sx={{ flexGrow: 1 }}
                   value={formData.postUrl}
                   label={'instagram post url'}
