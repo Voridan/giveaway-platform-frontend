@@ -1,4 +1,4 @@
-import EditGiveawayForm from '../components/Giveaway/EditGiveawayForm';
+import EditGiveawayForm from '../../components/Giveaway/EditGiveawayForm';
 
 const EditGiveawayPage = () => {
   return <EditGiveawayForm />;

@@ -46,9 +46,13 @@ const SignupForm = () => {
           },
         }
       );
+
       setAuth({ ...response.data });
-      navigate(isAdmin ? AdminRoutes.ADMIN : Routes.PROFILE, { replace: true });
+      navigate(isAdmin ? `/${AdminRoutes.ADMIN}` : `/${Routes.CABINET}`, {
+        replace: true,
+      });
     } catch (err: unknown) {
+      console.log(err);
       popupState.popupHandlers.setOpenPopup(true);
       popupState.popupHandlers.setPopupTitle('Request error');
       popupState.popupHandlers.setIsError(true);
@@ -57,9 +61,7 @@ const SignupForm = () => {
         if (!err?.response) {
           popupState.popupHandlers.setPopupContent('No Server Response');
         } else if (err.response?.status === 400) {
-          popupState.popupHandlers.setPopupContent(
-            'Missing Username or Password'
-          );
+          popupState.popupHandlers.setPopupContent(err.response.data.message);
         } else if (err.response?.status === 401) {
           popupState.popupHandlers.setPopupContent('Unauthorized');
         } else {

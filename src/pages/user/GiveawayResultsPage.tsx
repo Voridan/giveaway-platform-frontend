@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { GiveawayResultsModel } from '../models/GiveawayResults';
-import Loader from '../components/general/Loader/Loader';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { GiveawayResultsModel } from '../../models/GiveawayResults';
+import Loader from '../../components/general/Loader/Loader';
 import { Box, Container, Typography } from '@mui/material';
 import { AxiosError } from 'axios';
 

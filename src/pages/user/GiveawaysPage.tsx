@@ -1,19 +1,19 @@
 import { Box, Button, Container, Typography } from '@mui/material';
-import GiveawaysList from '../components/Giveaway/GiveawaysList';
+import GiveawaysList from '../../components/Giveaway/GiveawaysList';
 import { useEffect, useRef, useState } from 'react';
-import useAuth from '../hooks/useAuth';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import Pagination from '../components/general/Pagination';
-import SearchInput from '../components/general/SearchInput';
-import useReorder from '../hooks/useReorder';
-import Loader from '../components/general/Loader/Loader';
+import useAuth from '../../hooks/useAuth';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import Pagination from '../../components/general/Pagination';
+import SearchInput from '../../components/general/SearchInput';
+import useReorder from '../../hooks/useReorder';
+import Loader from '../../components/general/Loader/Loader';
 import { Link } from 'react-router-dom';
-import { useSorted } from '../hooks/useSorted';
-import { Routes } from '../router/routes';
-import { GiveawayListItem } from '../models/GiveawayListItem';
-import useFetching from '../hooks/useFetching';
+import { useSorted } from '../../hooks/useSorted';
+import { Routes } from '../../router/routes';
+import { GiveawayListItem } from '../../models/GiveawayListItem';
+import useFetching from '../../hooks/useFetching';
 
-const PartneredGiveawaysPage = () => {
+export default function GiveawaysPage() {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
 
@@ -30,7 +30,7 @@ const PartneredGiveawaysPage = () => {
   const [fetchFn, loading, error] = useFetching(
     async (limit: number, offset: number, controller: AbortController) => {
       const endPoint =
-        '/giveaways/partners/' + auth?.id + `?offset=${offset}&limit=${limit}`;
+        '/giveaways/users/' + auth?.id + `?limit=${limit}&offset=${offset}`;
 
       const response = await axiosPrivate.get<GiveawayListItem[]>(endPoint, {
         signal: controller.signal,
@@ -101,7 +101,7 @@ const PartneredGiveawaysPage = () => {
           </Typography>
         )}
         {!loading && !error && !!sorted.length && (
-          <GiveawaysList giveaways={sorted} partnered={true} />
+          <GiveawaysList giveaways={sorted} />
         )}
       </Box>
       <Pagination
@@ -113,6 +113,4 @@ const PartneredGiveawaysPage = () => {
       ></Pagination>
     </Container>
   );
-};
-
-export default PartneredGiveawaysPage;
+}

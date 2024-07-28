@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import GiveawaysBarChart from '../components/Giveaway/GiveawaysBarChart';
-import useAuth from '../hooks/useAuth';
-import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { GiveawayListItem } from '../models/GiveawayListItem';
+import GiveawaysBarChart from '../../components/Giveaway/GiveawaysBarChart';
+import useAuth from '../../hooks/useAuth';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import { GiveawayListItem } from '../../models/GiveawayListItem';
 const data = [
   { name: 'Giveaway 1', participantsCount: 120 },
   { name: 'Giveaway 2', participantsCount: 90 },

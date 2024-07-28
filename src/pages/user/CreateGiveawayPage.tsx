@@ -1,4 +1,4 @@
-import CreateGiveawayForm from '../components/Giveaway/CreateGiveawayForm';
+import CreateGiveawayForm from '../../components/Giveaway/CreateGiveawayForm';
 
 const CreateGiveawayPage = () => {
   return <CreateGiveawayForm></CreateGiveawayForm>;

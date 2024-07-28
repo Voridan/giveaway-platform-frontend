@@ -91,6 +91,8 @@ const EditGiveawayForm = () => {
   }, []);
 
   const handlePartnersChange = (partners: Partner[] | null) => {
+    console.log(partners);
+
     setPartnersFound(partners?.filter((p) => p.id !== auth?.id) || null);
   };
 
@@ -140,9 +142,6 @@ const EditGiveawayForm = () => {
           body.postUrl = formData.postUrl;
 
         if (formData.participants) body.participants = formData.participants;
-        console.log(selectedPartnerIds);
-        console.log([...selectedPartnerIds.values()]);
-        console.log([...selectedPartnerIds.values()].join(' '));
 
         body.partnersIds = [...selectedPartnerIds.values()].join(' ');
         await axiosPrivate.patch(`/giveaways/${giveaway.id}`, body);
@@ -174,7 +173,6 @@ const EditGiveawayForm = () => {
       popupHandlers.setPopupContent(warningMsg);
     }
   };
-  console.log(giveaway);
 
   return (
     <Container maxWidth={false} sx={{ margin: '10px 0' }}>
