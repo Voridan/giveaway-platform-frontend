@@ -16,7 +16,7 @@ import Popup from './general/Popup';
 import { AxiosError } from 'axios';
 import usePopup from '../hooks/usePopup';
 import { Auth } from '../models';
-import { Routes } from '../router/routes';
+import { AdminRoutes, Routes } from '../router/routes';
 import { useEffect } from 'react';
 
 const LOGIN_URL = '/auth/local/login';
@@ -27,7 +27,7 @@ const LoginForm = () => {
   const popupState = usePopup();
   const navigate = useNavigate();
   const location = useLocation() as ExtendedLocation;
-  const from = location.state?.from?.pathname || Routes.HOME;
+  let from = location.state?.from?.pathname || Routes.CABINET;
 
   useEffect(() => localStorage.setItem('persist', `${persist}`), [persist]);
 
@@ -49,7 +49,8 @@ const LoginForm = () => {
       );
 
       setAuth({ ...response.data });
-      navigate(from, { replace: true });
+      if (response.data.isAdmin) from = AdminRoutes.ADMIN;
+      navigate('/' + from);
     } catch (err: unknown) {
       popupState.popupHandlers.setOpenPopup(true);
       popupState.popupHandlers.setPopupTitle('Request error');

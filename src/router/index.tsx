@@ -17,6 +17,7 @@ import { AdminRoutes, Routes } from './routes';
 import PartneredGiveaways from '../pages/user/PartneredGiveawaysPage';
 import NotFoundPage from '../pages/NotFound';
 import { CabinetLayout } from '../components/CabinetLayout';
+import ChartPage from '../pages/user/ChartPage';
 
 export const router = createBrowserRouter([
   {
@@ -42,63 +43,79 @@ export const router = createBrowserRouter([
         path: Routes.CABINET,
         children: [
           {
-            element: <CabinetLayout />,
+            element: <RequiresAuth isAdmin={false} />,
             path: '',
             children: [
               {
-                path: Routes.PROFILE,
-                element: <RequiresAuth isAdmin={false} />,
+                element: <CabinetLayout />,
+                path: '',
                 children: [
                   {
-                    path: '',
-                    element: <ProfilePage />,
-                  },
-                ],
-              },
-              {
-                path: Routes.PARTNERED,
-                element: <RequiresAuth isAdmin={false} />,
-                children: [
-                  {
-                    path: '',
-                    index: true,
-                    element: <PartneredGiveaways />,
+                    element: <RequiresAuth isAdmin={false} />,
+                    path: Routes.PROFILE,
+                    children: [
+                      {
+                        path: '',
+                        element: <ProfilePage />,
+                      },
+                    ],
                   },
                   {
-                    path: ':id',
-                    element: <GiveawayPage />,
-                  },
-                ],
-              },
-              {
-                element: <RequiresAuth isAdmin={false} />,
-                path: Routes.GIVEAWAYS,
-                children: [
-                  {
-                    path: '',
-                    index: true,
-                    element: <GiveawaysPage />,
-                  },
-                  {
-                    path: ':id',
-                    index: true,
-                    element: <GiveawayPage />,
+                    path: Routes.PARTNERED,
+                    element: <RequiresAuth isAdmin={false} />,
+                    children: [
+                      {
+                        path: '',
+                        index: true,
+                        element: <PartneredGiveaways />,
+                      },
+                      {
+                        path: ':id',
+                        element: <GiveawayPage />,
+                      },
+                    ],
                   },
                   {
-                    path: Routes.ADD_GIVEAWAY,
-                    element: <CreateGiveawayPage />,
+                    element: <RequiresAuth isAdmin={false} />,
+                    path: Routes.GIVEAWAYS,
+                    children: [
+                      {
+                        path: '',
+                        index: true,
+                        element: <GiveawaysPage />,
+                      },
+                      {
+                        path: ':id',
+                        index: true,
+                        element: <GiveawayPage />,
+                      },
+                      {
+                        path: Routes.ADD_GIVEAWAY,
+                        element: <CreateGiveawayPage />,
+                      },
+                      {
+                        path: ':id',
+                        element: <GiveawayPage />,
+                      },
+                      {
+                        path: ':id/edit',
+                        element: <EditGiveawayPage />,
+                      },
+                      {
+                        path: ':id/results',
+                        element: <GiveawayResultsPage />,
+                      },
+                    ],
                   },
                   {
-                    path: ':id',
-                    element: <GiveawayPage />,
-                  },
-                  {
-                    path: ':id/edit',
-                    element: <EditGiveawayPage />,
-                  },
-                  {
-                    path: ':id/results',
-                    element: <GiveawayResultsPage />,
+                    path: Routes.STATS,
+                    element: <RequiresAuth isAdmin={false} />,
+                    children: [
+                      {
+                        path: '',
+                        element: <ChartPage />,
+                      },
+                    ],
                   },
                 ],
               },

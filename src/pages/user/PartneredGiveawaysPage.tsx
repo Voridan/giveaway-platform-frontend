@@ -8,10 +8,10 @@ import SearchInput from '../../components/general/SearchInput';
 import useReorder from '../../hooks/useReorder';
 import Loader from '../../components/general/Loader/Loader';
 import { Link } from 'react-router-dom';
-import { useSorted } from '../../hooks/useSorted';
 import { Routes } from '../../router/routes';
 import { GiveawayListItem } from '../../models/GiveawayListItem';
 import useFetching from '../../hooks/useFetching';
+import { EntityId } from '../../types';
 
 const PartneredGiveawaysPage = () => {
   const { auth } = useAuth();
@@ -21,40 +21,58 @@ const PartneredGiveawaysPage = () => {
   const [totalPages, setTotalPages] = useState(0);
   const limit = 4;
   const [page, setPage] = useState(1);
+  const [prevPage, setPrevPage] = useState(0);
 
   const reorderHandler = useReorder<GiveawayListItem>('title');
   const firstItemRef = useRef<GiveawayListItem | null>(null);
   const lastItemRef = useRef<GiveawayListItem | null>(null);
-  const sorted = useSorted<GiveawayListItem>(giveaways, 'createdAt');
 
   const [fetchFn, loading, error] = useFetching(
-    async (limit: number, offset: number, controller: AbortController) => {
-      const endPoint =
-        '/giveaways/partners/' + auth?.id + `?offset=${offset}&limit=${limit}`;
+    async (
+      controller: AbortController,
+      limit: number,
+      offset: number,
+      forward: boolean,
+      lastItemId: EntityId | undefined
+    ) => {
+      const endPoint = '/giveaways/partners/' + auth?.id;
+      const params: { [key: string]: EntityId | number | boolean } = {
+        limit,
+        offset,
+        forward,
+      };
+      if (lastItemId) params.lastItemId = lastItemId;
 
       const response = await axiosPrivate.get<GiveawayListItem[]>(endPoint, {
+        params,
         signal: controller.signal,
       });
 
       if (response.data.length > 0) {
         const totalCount = response.headers['giveaways-total-count'];
         setTotalPages(Math.ceil(totalCount / limit));
-        setGiveaways(response.data);
-        firstItemRef.current = response.data[0];
-        lastItemRef.current = response.data[response.data.length - 1];
+        const { data } = response;
+        setGiveaways(data);
+        firstItemRef.current = data[0];
+        lastItemRef.current = data[data.length - 1];
       }
     }
   );
 
   const handlePageChange = (newPage: number) => {
+    setPrevPage(page);
     setPage(newPage);
   };
 
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
-    const offset = limit * (page - 1);
-    isMounted && fetchFn(limit, offset, controller);
+    const forward = page > prevPage;
+    const lastItemId = forward
+      ? lastItemRef.current?.id
+      : firstItemRef.current?.id;
+    const offset = limit * (Math.abs(page - prevPage) - 1);
+    isMounted && fetchFn(controller, limit, offset, forward, lastItemId);
 
     return () => {
       isMounted = false;
@@ -77,7 +95,7 @@ const PartneredGiveawaysPage = () => {
         <SearchInput
           styles={{ flex: '1 1 auto' }}
           optionLabelKey='title'
-          options={sorted}
+          options={giveaways}
           onChange={(selected) => {
             const reordered = reorderHandler(giveaways || [], selected);
             setGiveaways(reordered);
@@ -100,8 +118,8 @@ const PartneredGiveawaysPage = () => {
             {error}
           </Typography>
         )}
-        {!loading && !error && !!sorted.length && (
-          <GiveawaysList giveaways={sorted} partnered={true} />
+        {!loading && !error && !!giveaways.length && (
+          <GiveawaysList giveaways={giveaways} partnered={true} />
         )}
       </Box>
       <Pagination

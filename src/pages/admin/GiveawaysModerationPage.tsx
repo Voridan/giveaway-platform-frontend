@@ -17,7 +17,6 @@ const GiveawaysModerationPage = () => {
   const axiosPrivate = useAxiosPrivate();
   const lastItemRef = useRef<GiveawayListItem | null>(null);
   const limit = 10;
-  console.log(hasMore);
 
   const [fetchFn, loading, error] = useFetching(
     async (limit: number, lastItemId: number, controller: AbortController) => {

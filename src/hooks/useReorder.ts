@@ -7,6 +7,7 @@ const useReorder = <T>(key: keyof T) => {
       if (searchItemIdx === -1) {
         return items;
       }
+      if (searchItemIdx === 0) return [...items];
 
       return [
         items[searchItemIdx],

@@ -54,7 +54,7 @@ function ProfilePage() {
     };
   }, []);
 
-  const forgotPssword = async () => {
+  const forgotPassword = async () => {
     try {
       await axiosPrivate.post('/auth/forgot-password');
       const newChannel = new BroadcastChannel(RESET_PASSWORD_CHANNEL);
@@ -108,7 +108,7 @@ function ProfilePage() {
           <Logout />
         </Button>
         <Button
-          onClick={forgotPssword}
+          onClick={forgotPassword}
           variant='outlined'
           color='secondary'
           sx={{ mt: 1 }}
